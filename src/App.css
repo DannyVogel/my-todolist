@@ -1,0 +1,53 @@
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons");
+
+* {
+  box-sizing: border-box;
+  
+}
+
+body {
+  margin: 0;
+}
+
+#root {
+  background-color: slategrey;
+  height: 100vh;
+  padding-top: 10px;
+}
+
+.app {
+  border: 1px solid black;
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  margin: auto;
+  background-color: bisque;
+  
+}
+
+.title {
+  width: 100%;
+  text-align: center;
+}
+
+.newtask {
+  margin: auto;
+  justify-self: center;
+  padding: 10px;
+}
+
+.newtaskbutton {
+  margin-left: 10px;
+}
+
+.delete-button {
+  font-size: 15px;
+  border: none;
+  background-color: white;
+  float: right;
+}
+
+.reset-button {
+  width: 50px;
+  align-self: flex-end;
+}

@@ -35,15 +35,9 @@ function App() {
 
   function handleChecked(event){
     const id = event.target.id
-    setToDos(prevToDos => {
-      let newToDos = prevToDos.map(item => {
-        if(id === item.id){
-          return {...item, checked: !item.checked}
-        } 
-        return item
-      })
-      return newToDos
-    })
+    setToDos(prevToDos => prevToDos.map(item => {
+      return id === item.id ? {...item, checked: !item.checked} : item
+    }))
   }
 
   function deleteTask(event) {

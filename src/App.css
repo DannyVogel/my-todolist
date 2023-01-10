@@ -54,6 +54,10 @@ body {
   cursor: pointer;
 }
 
+.newtaskbutton:hover {
+  background-color: slategray;
+}
+
 .check {
   width: 30px;
   cursor: pointer;
@@ -71,6 +75,10 @@ body {
   cursor: pointer;
 }
 
+.delete-button:hover {
+  color: red;
+}
+
 .reset-button {
   width: 50px;
   align-self: flex-end;
@@ -79,4 +87,8 @@ body {
   margin-right: 10px;
   margin-bottom: 10px;
   cursor: pointer;
+}
+
+.reset-button:hover {
+  background-color: slategray;
 }

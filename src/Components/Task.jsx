@@ -9,8 +9,9 @@ export default function Task(props) {
   const deleteButton = (<button className='delete-button material-icons' onClick={props.deleteTask} id={props.id}>close</button>)
 
   return (
-    <div>
+    <div className='taskList'>
         <input 
+          className='check'
           type="checkbox" 
           id={props.id} 
           checked={props.checked} 

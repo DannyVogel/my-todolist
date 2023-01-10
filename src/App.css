@@ -1,8 +1,9 @@
 @import url("https://fonts.googleapis.com/icon?family=Material+Icons");
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 
 * {
   box-sizing: border-box;
-  
+  font-family: Roboto;
 }
 
 body {
@@ -17,12 +18,14 @@ body {
 
 .app {
   border: 1px solid black;
+  border-radius: 20px;
   display: flex;
   flex-direction: column;
   width: 50%;
   margin: auto;
   background-color: bisque;
-  
+  max-width: 700px;
+  padding: 0px 30px;
 }
 
 .title {
@@ -36,18 +39,40 @@ body {
   padding: 10px;
 }
 
+.newtaskinput {
+  border-radius: 5px;
+  border: 1px solid gray;
+  padding: 5px;
+}
+
 .newtaskbutton {
   margin-left: 10px;
+  border-radius: 5px;
+  border: 1px solid gray;
+  width: 30px;
+  height: 28px;
+}
+
+.check {
+  width: 30px;
+}
+
+.taskList {
+  padding-top: 10px;
 }
 
 .delete-button {
   font-size: 15px;
   border: none;
-  background-color: white;
+  background-color: bisque;
   float: right;
 }
 
 .reset-button {
   width: 50px;
   align-self: flex-end;
+  border-radius: 20px;
+  border: 1px solid gray;
+  margin-right: 10px;
+  margin-bottom: 10px;
 }

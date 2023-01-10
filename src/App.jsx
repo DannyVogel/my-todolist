@@ -25,7 +25,7 @@ function App() {
       setToDos(prevToDos => [...prevToDos, newTask])
       setNewText("")
     } else {
-      alert("please enter new ToDo")
+      alert("Please enter new ToDo")
     }
   }
 

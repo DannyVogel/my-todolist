@@ -20,9 +20,13 @@ function App() {
   />)
 
   function createNewToDo() {
-    const newTask = { id: uuid(), text: newText, checked: false };
-    setToDos(prevToDos => [...prevToDos, newTask])
-    setNewText("")
+    if(newText != ""){
+      const newTask = { id: uuid(), text: newText, checked: false };
+      setToDos(prevToDos => [...prevToDos, newTask])
+      setNewText("")
+    } else {
+      alert("please enter new ToDo")
+    }
   }
 
   function updatNewText(event) {

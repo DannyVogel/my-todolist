@@ -69,8 +69,8 @@ function App() {
       </div>
       {toDos.length > 0 
         ? toDoElements 
-        : (<div>
-            <input type="checkbox"></input>
+        : (<div className='taskList'>
+            <input className='check' type="checkbox"></input>
             <span>Your ToDos will appear here</span>
           </div>)
       }

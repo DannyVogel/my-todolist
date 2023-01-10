@@ -51,10 +51,12 @@ body {
   border: 1px solid gray;
   width: 30px;
   height: 28px;
+  cursor: pointer;
 }
 
 .check {
   width: 30px;
+  cursor: pointer;
 }
 
 .taskList {
@@ -66,6 +68,7 @@ body {
   border: none;
   background-color: bisque;
   float: right;
+  cursor: pointer;
 }
 
 .reset-button {
@@ -75,4 +78,5 @@ body {
   border: 1px solid gray;
   margin-right: 10px;
   margin-bottom: 10px;
+  cursor: pointer;
 }

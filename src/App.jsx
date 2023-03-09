@@ -65,7 +65,7 @@ function App() {
       <h1 className='title'>ToDo List</h1>
       <div className='newtask'>
         <input className='newtaskinput' type="text" name="newtask" value={newText} onChange={updatNewText} placeholder="Type new ToDo here"/>
-        <button className='newtaskbutton' onClick={createNewToDo}>+</button>
+        <i className='newtaskbutton fa-solid fa-circle-plus' onClick={createNewToDo}></i>
       </div>
       {toDos.length > 0 
         ? toDoElements 
@@ -75,7 +75,7 @@ function App() {
           </div>)
       }
       <br />
-      <button className="reset-button" onClick={handleReset}>Reset</button>
+      <i className="reset-button fa-solid fa-recycle" onClick={handleReset}>: Clear list</i>
     </div>
   )
 }

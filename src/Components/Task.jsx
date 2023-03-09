@@ -6,7 +6,7 @@ export default function Task(props) {
     textDecoration: props.checked ? "line-through" : null
   }
   
-  const deleteButton = (<button className='delete-button material-icons' onClick={props.deleteTask} id={props.id}>close</button>)
+  const deleteButton = (<i className='delete-button fa-solid fa-trash-can' onClick={props.deleteTask} id={props.id}></i>)
 
   return (
     <div className='taskList'>
@@ -17,7 +17,7 @@ export default function Task(props) {
           checked={props.checked} 
           onChange={props.handleChange}
         />
-        <span style={styles}>{props.text}</span>
+        <span className='task-text' style={styles}>{props.text}</span>
         {props.checked ? deleteButton : null}
     </div>
   )

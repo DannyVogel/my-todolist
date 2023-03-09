@@ -71,7 +71,7 @@ function App() {
         ? toDoElements 
         : (<div className='taskList'>
             <input className='check' type="checkbox"></input>
-            <span>Your ToDos will appear here</span>
+            <span className='task-text'>Your ToDos will appear here</span>
           </div>)
       }
       <br />

@@ -50,7 +50,6 @@ function App() {
 
   useEffect(() => {
     localStorage.setItem("toDos", JSON.stringify(toDos))
-    console.log(toDos)
   }, [toDos])
 
   function handleReset() {

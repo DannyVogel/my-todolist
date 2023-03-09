@@ -7,11 +7,6 @@
 
 body {
   margin: 0;
-}
-
-#root {
-  height: 100vh;
-  padding-top: 10px;
   background-color: slategray;
 }
 
@@ -24,8 +19,8 @@ body {
   min-width: 300px;
   max-width: 450px;
   min-height: 600px;
-  margin: auto;
-  padding: 0px 30px;
+  margin: 10px auto;
+  padding: 0 30px;
   box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.75);
   -webkit-box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.75);
   -moz-box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.75);
@@ -38,7 +33,7 @@ body {
 }
 
 .newtask {
-  margin: 0 auto;
+  margin: 0 40px;
   display: flex;
   justify-self: center;
   align-items: center;
@@ -50,6 +45,15 @@ body {
   border: 1px solid gray;
   padding: 5px;
   line-height: 20px;
+  width: 100%;
+}
+
+.newtaskinput::placeholder {
+  text-align: center;
+}
+
+.newtaskinput:focus::placeholder {
+  color: transparent;
 }
 
 .newtaskbutton {

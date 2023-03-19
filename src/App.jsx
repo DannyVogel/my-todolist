@@ -73,8 +73,10 @@ function App() {
     <div className="app">
       <h1 className='title'>ToDo List</h1>
       <div className='newtask'>
-        <input className='newtaskinput' type="text" name="newtask" value={newText} onChange={updatNewText} placeholder="Type new ToDo here"/>
-        <i className='newtaskbutton fa-solid fa-circle-plus' onClick={createNewToDo}></i>
+        <form className='newTaskForm' onSubmit={createNewToDo}>
+          <input className='newtaskinput' type="text" name="newtask" value={newText} onChange={updatNewText} placeholder="Type new ToDo here"/>
+          <i className='newtaskbutton fa-solid fa-circle-plus' onClick={createNewToDo}></i>
+        </form>
       </div>
       {toDos.length > 0 
         ? toDoElements 

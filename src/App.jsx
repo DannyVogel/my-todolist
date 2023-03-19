@@ -2,7 +2,16 @@ import { useState, useEffect } from 'react'
 import uuid from 'react-uuid';
 import Task from './Components/Task'
 import './App.css'
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js"
+import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js"
 
+const appSettings = {
+    databaseURL: "https://todolist-396ab-default-rtdb.europe-west1.firebasedatabase.app/"
+}
+
+const app = initializeApp(appSettings)
+const database = getDatabase(app)
+const toDoDB = ref(database, "toDo")
 
 function App() {
   const [toDos, setToDos] = useState( () => 
@@ -50,6 +59,7 @@ function App() {
 
   useEffect(() => {
     localStorage.setItem("toDos", JSON.stringify(toDos))
+    push (toDoDB, JSON.stringify(toDos))
   }, [toDos])
 
   function handleReset() {

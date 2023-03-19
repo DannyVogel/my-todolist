@@ -40,6 +40,12 @@ body {
   padding: 10px;
 }
 
+.newTaskForm {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .newtaskinput {
   border-radius: 5px;
   border: 1px solid gray;
@@ -59,7 +65,7 @@ body {
 }
 
 .newtaskbutton {
-  margin-left: 10px;
+  margin-left: 20px;
   color: blue;
   cursor: pointer;
   font-size: 25px;

@@ -7,27 +7,23 @@ import { useState, useEffect } from 'react'
 import uuid from 'react-uuid';
 import Task from './Components/Task'
 import './App.css'
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js"
-import { getDatabase, ref, update, onValue } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js"
-
-const appSettings = {
-    databaseURL: "https://todolist-396ab-default-rtdb.europe-west1.firebasedatabase.app/"
-}
+import {database, ref, get, child, update} from '../firebase'
 
 const userID = 1234
-const app = initializeApp(appSettings)
-const database = getDatabase(app)
 const toDoDB = ref(database, "toDoApp")
 const toDoListRef = ref(database, '/toDoApp/toDoLists/' + userID)
 
 function App() {
-  const [toDos, setToDos] = useState([])
+  const [toDos, setToDos] = useState(()=>[])
+  const [initWrite, setInitWrite] = useState(false)
   const [newText, setNewText] = useState("")
   
   //Read tasks from database
   useEffect(() => {
-    onValue(toDoListRef, (snapshot) => {
-      setToDos(snapshot.val() || []);
+    get(child(toDoDB, `/toDoLists/${userID}`)).then((snapshot) => {
+      console.log("ran get", snapshot, snapshot.exists())
+      snapshot.exists() ? setToDos(snapshot.val()) : []
+      setInitWrite(true)
     });
   }, []);
 
@@ -76,12 +72,12 @@ function App() {
   function writeNewToDo(toDoList) {
     const updates = {};
     updates['/toDoLists/' + userID] = toDoList;
-  
+    console.log("ran update", toDos)
     return update(toDoDB, updates);
   }
 
   useEffect(() => {
-    writeNewToDo(toDos)
+    initWrite && writeNewToDo(toDos)
   }, [toDos])
 
   function handleReset() {

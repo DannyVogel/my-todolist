@@ -2,8 +2,7 @@ import { useState, useEffect } from 'react'
 import uuid from 'react-uuid';
 import Task from './Components/Task'
 import './App.css'
-import {database, ref, get, child, update, remove, onValue} from '../firebase'
-import { set } from 'firebase/database';
+import {database, ref, update, remove, onValue} from '../firebase'
 
 const userID = 1234
 const toDoDB = ref(database, "toDoApp")

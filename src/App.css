@@ -11,7 +11,7 @@ body {
 }
 
 .app {
-  /* border: 1px solid black; */
+  position: relative;
   border-radius: 20px;
   display: flex;
   flex-direction: column;
@@ -43,7 +43,15 @@ body {
 .newTaskForm {
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: center;  
+}
+
+.errorParagraph {
+  position: absolute;
+  font-size: 10px;
+  color: red;
+  top: 19%;
+  left: 28%;
 }
 
 .newtaskinput {

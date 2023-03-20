@@ -1,11 +1,9 @@
-//Pending tasks:
-// - edit no ToDo entered alert
-
 import { useState, useEffect } from 'react'
 import uuid from 'react-uuid';
 import Task from './Components/Task'
 import './App.css'
 import {database, ref, get, child, update, remove, onValue} from '../firebase'
+import { set } from 'firebase/database';
 
 const userID = 1234
 const toDoDB = ref(database, "toDoApp")
@@ -15,18 +13,14 @@ function App() {
   const [toDos, setToDos] = useState(()=>[])
   const [initWrite, setInitWrite] = useState(false)
   const [newText, setNewText] = useState("")
+  const [errorParagraph, setErrorParagraph] = useState(false)
   
-  //Read tasks from database
+  //Read tasks from database and update in realtime
   useEffect(() => {
     onValue(toDoListRef, (snapshot) => {
       snapshot.exists() ? setToDos(snapshot.val()) : []
       setInitWrite(true)
     })
-    
-    // get(child(toDoDB, `/toDoLists/${userID}`)).then((snapshot) => {
-    //   snapshot.exists() ? setToDos(snapshot.val()) : []
-    //   setInitWrite(true)
-    // });
   }, []);
 
   const toDoElements = toDos.map(task => (
@@ -47,7 +41,10 @@ function App() {
       setToDos(prevToDos => [...prevToDos, newTask])
       setNewText("")
     } else {
-      alert("Please enter new ToDo")
+      setErrorParagraph(true)
+      setTimeout(()=>{
+        setErrorParagraph(false)
+      }, 2000)
     }
   }
 
@@ -89,6 +86,9 @@ function App() {
   return (
     <div className="app">
       <h1 className='title'>ToDo List</h1>
+          {errorParagraph && 
+            <p className='errorParagraph'>Please enter new ToDo</p>
+          }
       <div className='newtask'>
         <form className='newTaskForm' onSubmit={createNewToDo}>
           <input className='newtaskinput' type="text" name="newtask" value={newText} onChange={updatNewText} placeholder="Type new ToDo here" autoComplete='off'/>

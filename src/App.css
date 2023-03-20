@@ -141,7 +141,7 @@ body {
   .app {
     height: 100vh;
     margin: 0 auto;
-    border-radius: none;
+    border-radius: 0;
   }
 
 

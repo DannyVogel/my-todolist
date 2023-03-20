@@ -1,12 +1,11 @@
 //Pending tasks:
-// - add update tasks without refresh
 // - edit no ToDo entered alert
 
 import { useState, useEffect } from 'react'
 import uuid from 'react-uuid';
 import Task from './Components/Task'
 import './App.css'
-import {database, ref, get, child, update, remove} from '../firebase'
+import {database, ref, get, child, update, remove, onValue} from '../firebase'
 
 const userID = 1234
 const toDoDB = ref(database, "toDoApp")
@@ -19,10 +18,15 @@ function App() {
   
   //Read tasks from database
   useEffect(() => {
-    get(child(toDoDB, `/toDoLists/${userID}`)).then((snapshot) => {
+    onValue(toDoListRef, (snapshot) => {
       snapshot.exists() ? setToDos(snapshot.val()) : []
       setInitWrite(true)
-    });
+    })
+    
+    // get(child(toDoDB, `/toDoLists/${userID}`)).then((snapshot) => {
+    //   snapshot.exists() ? setToDos(snapshot.val()) : []
+    //   setInitWrite(true)
+    // });
   }, []);
 
   const toDoElements = toDos.map(task => (
@@ -79,6 +83,7 @@ function App() {
 
   function handleReset() {
     remove(toDoDB);
+    setToDos([])
   }
 
   return (

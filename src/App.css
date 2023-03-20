@@ -50,7 +50,7 @@ body {
   position: absolute;
   font-size: 10px;
   color: red;
-  top: 20%;
+  top: 19%;
   left: 28%;
 }
 
@@ -144,6 +144,8 @@ body {
     border-radius: 0;
   }
 
-
+  .errorParagraph {
+    top: 20%;
+  }
 
 }

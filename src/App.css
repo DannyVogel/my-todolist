@@ -50,7 +50,7 @@ body {
   position: absolute;
   font-size: 10px;
   color: red;
-  top: 19%;
+  top: 20%;
   left: 28%;
 }
 
@@ -135,4 +135,13 @@ body {
 
 .reset-button:hover {
   color: red;
+}
+
+@media screen and (max-width: 450px) {
+  .app {
+    height: 100vh;
+  }
+
+
+
 }

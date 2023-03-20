@@ -139,7 +139,7 @@ body {
 
 @media screen and (max-width: 450px) {
   .app {
-    height: 95vh;
+    height: 99vh;
     margin: 0 auto;
   }
 

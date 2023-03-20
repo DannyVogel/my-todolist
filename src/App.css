@@ -129,7 +129,7 @@ body {
   align-self: flex-end;
   margin-top: auto;
   margin-right: 10px;
-  margin-bottom: 10px;
+  padding-bottom: 20px;
   cursor: pointer;
 }
 
@@ -139,7 +139,7 @@ body {
 
 @media screen and (max-width: 450px) {
   .app {
-    height: 100vh;
+    height: 90vh;
     margin: 0 auto;
   }
 

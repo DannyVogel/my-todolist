@@ -1,6 +1,5 @@
 //Pending tasks:
 // - fix reset db on reload
-// - add favicon
 // - edit no ToDo entered alert
 
 import { useState, useEffect } from 'react'

@@ -17,7 +17,7 @@ export default function Task(props) {
           checked={props.checked} 
           onChange={props.handleChange}
         />
-        <span className='task-text' style={styles}>{props.text}</span>
+        <label for={props.id} className='task-text' style={styles}>{props.text}</label>
         {props.checked ? deleteButton : null}
     </div>
   )

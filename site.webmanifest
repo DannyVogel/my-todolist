@@ -6,7 +6,7 @@
             {"src":"/notebook.png","sizes":"192x192","type":"image/png"},
             {"src":"/notebook.png","sizes":"512x512","type":"image/png"}
         ],
-    "theme_color": "#708090",
-    "background_color": "#708090",
+    "theme_color": "#FFFFFF",
+    "background_color": "#FFFFFF",
     "display": "standalone"
 }

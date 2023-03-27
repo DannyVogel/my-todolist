@@ -22,4 +22,5 @@ const app = initializeApp(firebaseConfig);
 // Initialize Realtime Database and get a reference to the service
 const database = getDatabase(app);
 
+
 export {database, ref, get, child, update, remove, onValue};

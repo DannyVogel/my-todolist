@@ -3,26 +3,33 @@ import uuid from 'react-uuid';
 import Task from './Components/Task'
 import './App.css'
 import {database, ref, update, remove, onValue} from '../firebase'
+import { DataSnapshot } from 'firebase/database';
 
 const userID = 1234
 const toDoDB = ref(database, "toDoApp")
 const toDoListRef = ref(database, '/toDoApp/toDoLists/' + userID)
 
-function App() {
-  const [toDos, setToDos] = useState(()=>[])
-  const [initWrite, setInitWrite] = useState(false)
-  const [newText, setNewText] = useState("")
-  const [errorParagraph, setErrorParagraph] = useState(false)
+interface ToDo {
+  id: string,
+  text: string,
+  checked: boolean
+}
+
+function App(): JSX.Element {
+  const [toDos, setToDos] = useState<ToDo[]>(()=>[])
+  const [initWrite, setInitWrite] = useState<boolean>(false)
+  const [newText, setNewText] = useState<string>("")
+  const [errorParagraph, setErrorParagraph] = useState<boolean>(false)
   
   //Read tasks from database and update in realtime
   useEffect(() => {
-    onValue(toDoListRef, (snapshot) => {
+    onValue(toDoListRef, (snapshot: DataSnapshot) => {
       snapshot.exists() ? setToDos(snapshot.val()) : []
       setInitWrite(true)
     })
   }, []);
 
-  const toDoElements = toDos.map(task => (
+  const toDoElements = toDos.map((task: ToDo) => (
     <Task
       key={task.id}
       id={task.id}
@@ -33,10 +40,10 @@ function App() {
     />
   ));
 
-  function createNewToDo(event) {
+  function createNewToDo(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
     if(newText != ""){
-      const newTask = { id: uuid(), text: newText, checked: false };
+      const newTask: ToDo = { id: uuid(), text: newText, checked: false };
       setToDos(prevToDos => [...prevToDos, newTask])
       setNewText("")
     } else {
@@ -47,19 +54,19 @@ function App() {
     }
   }
 
-  function updatNewText(event) {
+  function updatNewText(event: React.ChangeEvent<HTMLInputElement>): void {
     setNewText(event.target.value)
   }
 
-  function handleChecked(event){
-    const id = event.target.id
+  function handleChecked(event: React.ChangeEvent<HTMLInputElement>): void {
+    const id = (event.target as HTMLElement).id
     setToDos(prevToDos => prevToDos.map(item => {
       return id === item.id ? {...item, checked: !item.checked} : item
     }))
   }
 
-  function deleteTask(event) {
-    const id = event.target.id
+  function deleteTask(event: React.MouseEvent<HTMLElement>): void {
+    const id = (event.target as HTMLElement).id
     setToDos(prevToDos => {
       let newToDos = prevToDos.filter(item => id != item.id)
       return newToDos
@@ -67,8 +74,8 @@ function App() {
   }
 
   //function called by following useEffect to write new toDo to database
-  function writeNewToDo(toDoList) {
-    const updates = {};
+  function writeNewToDo(toDoList: ToDo[]) {
+    const updates: Record<string, any> = {};
     updates['/toDoLists/' + userID] = toDoList;
     return update(toDoDB, updates);
   }
@@ -77,7 +84,7 @@ function App() {
     initWrite && writeNewToDo(toDos)
   }, [toDos])
 
-  function handleReset() {
+  function handleReset(): void {
     remove(toDoDB);
     setToDos([])
   }
@@ -90,8 +97,8 @@ function App() {
           }
       <div className='newtask'>
         <form className='newTaskForm' onSubmit={createNewToDo}>
-          <input className='newtaskinput' type="text" name="newtask" value={newText} onChange={updatNewText} placeholder="Type new ToDo here" autoComplete='off'/>
-          <i className='newtaskbutton fa-solid fa-circle-plus' onClick={createNewToDo}></i>
+          <input className='newtaskinput' type="text" name="newtask" value={newText} onChange={updatNewText} placeholder="Type new ToDo here" autoComplete='off' />
+          <button className='newtaskbutton' type="submit"><i className='fa-solid fa-circle-plus'></i></button>
         </form>
       </div>
       {toDos.length > 0 

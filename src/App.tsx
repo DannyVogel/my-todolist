@@ -1,13 +1,12 @@
 import { useState, useEffect } from 'react'
 import uuid from 'react-uuid';
 import Task from './Components/Task'
+import AuthModal from './Components/AuthModal';
 import './App.css'
 import {database, ref, update, remove, onValue} from '../firebase'
 import { DataSnapshot } from 'firebase/database';
-
-const userID = 1234
-const toDoDB = ref(database, "toDoApp")
-const toDoListRef = ref(database, '/toDoApp/toDoLists/' + userID)
+import { auth, signOut, get, onAuthStateChanged } from '../firebase';
+import type { User } from '../firebase';
 
 interface ToDo {
   id: string,
@@ -17,17 +16,46 @@ interface ToDo {
 
 function App(): JSX.Element {
   const [toDos, setToDos] = useState<ToDo[]>(()=>[])
-  const [initWrite, setInitWrite] = useState<boolean>(false)
   const [newText, setNewText] = useState<string>("")
   const [errorParagraph, setErrorParagraph] = useState<boolean>(false)
+  const [loggedIn, setLoggedIn] = useState<boolean>(false)
+  const [userName, setUser] = useState<string>("")
+  const [userUID, setUserUID] = useState<string>("")
+  const toDoDB = ref(database, "toDoApp")
+  const toDoListRef = ref(database, '/toDoApp/toDoLists/' + userUID)
   
-  //Read tasks from database and update in realtime
   useEffect(() => {
+    onAuthStateChanged(auth, (user: User | null)=> {
+      if (user) {
+        const uid: string = user.uid;
+        setUser(user.email!.slice(0, (user.email!).indexOf("@")))
+        setLoggedIn(true)
+        setUserUID(uid)
+      } else {
+        setLoggedIn(false)
+        setUser('')
+        setUserUID('')
+        // User is signed out
+      }
+    });
+  }, [])
+
+  //when logged in, get from database once
+  useEffect(() => {
+    if(loggedIn){
+      get(toDoListRef).then((snapshot: DataSnapshot) => {
+        snapshot.exists() ? setToDos(snapshot.val()) : setToDos([])
+      })
+    }
+  }, [loggedIn]);
+
+  // Read todos from firebase realtime storage database and update in realtime
+  useEffect(() => {
+    if(!loggedIn) return
     onValue(toDoListRef, (snapshot: DataSnapshot) => {
-      snapshot.exists() ? setToDos(snapshot.val()) : []
-      setInitWrite(true)
+      snapshot.exists() ? setToDos(snapshot.val()) : setToDos([])
     })
-  }, []);
+  }, [loggedIn]);
 
   const toDoElements = toDos.map((task: ToDo) => (
     <Task
@@ -54,6 +82,19 @@ function App(): JSX.Element {
     }
   }
 
+  //function called by following useEffect to write new toDo to database
+  function writeNewToDo(toDoList: ToDo[]) {
+    if(!loggedIn) return
+    const updates: Record<string, any> = {};
+    updates['/toDoLists/' + userUID] = toDoList;
+    return update(toDoDB, updates);
+  }
+
+  useEffect(() => {
+    if(!loggedIn) return
+    writeNewToDo(toDos)
+  }, [toDos])
+
   function updatNewText(event: React.ChangeEvent<HTMLInputElement>): void {
     setNewText(event.target.value)
   }
@@ -73,40 +114,55 @@ function App(): JSX.Element {
     })
   }
 
-  //function called by following useEffect to write new toDo to database
-  function writeNewToDo(toDoList: ToDo[]) {
-    const updates: Record<string, any> = {};
-    updates['/toDoLists/' + userID] = toDoList;
-    return update(toDoDB, updates);
-  }
-
-  useEffect(() => {
-    initWrite && writeNewToDo(toDos)
-  }, [toDos])
-
   function handleReset(): void {
-    remove(toDoDB);
     setToDos([])
   }
 
+  function handleSignOut(){
+    signOut(auth).then(() => {
+        setLoggedIn(false)
+        setUser("")
+        setUserUID("")
+        setToDos([])
+    }).catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorCode, errorMessage)
+    });
+}
+
   return (
     <div className="app">
-      <h1 className='title'>ToDo List</h1>
-          {errorParagraph && 
-            <p className='errorParagraph'>Please enter new ToDo</p>
-          }
+      {loggedIn ? <button className='logout-button' onClick={handleSignOut}><i className="fa-solid fa-power-off"></i></button> : null}
+      {loggedIn
+        ? null
+        : <AuthModal
+          loggedIn={loggedIn}
+          user={userName}
+          setLoggedIn={setLoggedIn}
+          setUser={setUser}
+          userUID={userUID}
+          setUserUID={setUserUID}
+        />}
+      <div className="titleContainer">
+        <h1 className='title'>{userName && `${userName}'s`}</h1>
+        <h1 className='title'>ToDo List</h1>
+      </div>
+      {errorParagraph &&
+        <p className='errorParagraph'>Please enter new ToDo</p>
+      }
       <div className='newtask'>
         <form className='newTaskForm' onSubmit={createNewToDo}>
           <input className='newtaskinput' type="text" name="newtask" value={newText} onChange={updatNewText} placeholder="Type new ToDo here" autoComplete='off' />
           <button className='newtaskbutton' type="submit"><i className='fa-solid fa-circle-plus'></i></button>
         </form>
       </div>
-      {toDos.length > 0 
-        ? toDoElements 
+      {toDos.length > 0
+        ? toDoElements
         : (<div className='taskList'>
-            <input className='check' type="checkbox"></input>
-            <span className='task-text'>Your ToDos will appear here</span>
-          </div>)
+          <input className='check' type="checkbox"></input>
+          <span className='task-text'>Your ToDos will appear here</span>
+        </div>)
       }
       <br />
       <i className="reset-button fa-solid fa-recycle" onClick={handleReset}>: Clear list</i>

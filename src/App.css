@@ -187,7 +187,7 @@ body {
   border: 1px solid gray;
   border-right: none;
   outline: none;
-  padding: 5px;
+  padding: 5px 0 5px 5px;
   line-height: 20px;
   min-width: 160px;
   width: 100%;

@@ -15,7 +15,6 @@ interface ToDo {
 
 function App(): JSX.Element {
   const [toDos, setToDos] = useState<ToDo[]>(()=>[])
-  const [initWrite, setInitWrite] = useState<boolean>(false)
   const [newText, setNewText] = useState<string>("")
   const [errorParagraph, setErrorParagraph] = useState<boolean>(false)
   const [loggedIn, setLoggedIn] = useState<boolean>(false)
@@ -29,7 +28,6 @@ function App(): JSX.Element {
     if(loggedIn){
       get(toDoListRef).then((snapshot: DataSnapshot) => {
         snapshot.exists() ? setToDos(snapshot.val()) : []
-        console.log("initial get")
       })
     }
   }, [loggedIn]);
@@ -71,7 +69,6 @@ function App(): JSX.Element {
   //function called by following useEffect to write new toDo to database
   function writeNewToDo(toDoList: ToDo[]) {
     if(!loggedIn) return
-    console.log("writeNewToDo")
     const updates: Record<string, any> = {};
     updates['/toDoLists/' + userUID] = toDoList;
     return update(toDoDB, updates);
@@ -80,7 +77,6 @@ function App(): JSX.Element {
   useEffect(() => {
     if(!loggedIn) return
     writeNewToDo(toDos)
-    console.log(toDos, "writeNewToDo useEffect")
   }, [toDos])
 
   function updatNewText(event: React.ChangeEvent<HTMLInputElement>): void {

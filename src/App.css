@@ -73,8 +73,10 @@ body {
 }
 
 .newtaskbutton {
-  margin-left: 20px;
-  color: blue;
+  margin-left: 15px;
+  color: rgb(4, 4, 206);
+  background-color: transparent;
+  border: none;
   cursor: pointer;
   font-size: 25px;
   

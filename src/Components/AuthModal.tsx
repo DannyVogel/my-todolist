@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { auth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from '../../firebase';
+import { auth, updateProfile, signInWithEmailAndPassword, createUserWithEmailAndPassword } from '../../firebase';
 
 type Props = {
     loggedIn: boolean,
@@ -13,11 +13,12 @@ type Props = {
 interface SignInFormData {
     signInEmail: string;
     signInPassword: string;
-  }
-  
-  interface SignUpFormData {
+}
+
+interface SignUpFormData {
     signUpEmail: string;
     signUpPassword: string;
+    name: string;
   }
   
   type SetSignInFormData = React.Dispatch<React.SetStateAction<SignInFormData>>;
@@ -31,7 +32,7 @@ export default function AuthModal(props: Props) {
         signInEmail: '', signInPassword: ''
     })
     const [signUpFormData, setSignUpFormData]: [SignUpFormData, SetSignUpFormData] = useState({
-        signUpEmail: '', signUpPassword: ''
+        signUpEmail: '', signUpPassword: '', name: ''
     })
 
     const [errorMessage, setErrorMessage] = useState<string>('')
@@ -51,8 +52,8 @@ export default function AuthModal(props: Props) {
         signInWithEmailAndPassword(auth, signInFormData.signInEmail, signInFormData.signInPassword)
             .then((userCredential) => {
                 // Signed in 
-                const username = userCredential.user?.email?.slice(0, userCredential.user?.email?.indexOf('@'))
-                props.setUser(username!)
+                const user = userCredential.user;
+                props.setUser(user.displayName!)
                 props.setLoggedIn(true)
                 props.setUserUID(userCredential.user?.uid!)
             })
@@ -73,8 +74,12 @@ export default function AuthModal(props: Props) {
         setErrorMessage('')
         createUserWithEmailAndPassword(auth, signUpFormData.signUpEmail, signUpFormData.signUpPassword)
         .then((userCredential) => {
-            const username = userCredential.user?.email?.slice(0, userCredential.user?.email?.indexOf('@'))
-            props.setUser(username!)
+            const user = userCredential.user;
+            updateProfile(auth.currentUser!, {
+                displayName: signUpFormData.name
+            }).then(() => {
+                props.setUser(user.displayName!)
+            })
             props.setLoggedIn(true)
             props.setUserUID(userCredential.user?.uid!)
         })
@@ -93,8 +98,7 @@ export default function AuthModal(props: Props) {
     function logInAsGuest(){
         signInWithEmailAndPassword(auth, 'guest@guest.com', '123456')
         .then((userCredential) => {
-            const username = userCredential.user?.email?.slice(0, userCredential.user?.email?.indexOf('@'))
-            props.setUser(username!)
+            props.setUser("Guest")
             props.setLoggedIn(true)
             props.setUserUID(userCredential.user?.uid!)
         })
@@ -129,6 +133,8 @@ export default function AuthModal(props: Props) {
                     :   <form onSubmit={processSignUpFormData}>
                             <fieldset className='logInForm'>
                                 <legend>Sign Up</legend>
+                                <label htmlFor="name" className="">Name:</label>
+                                <input type="text" name="name" id="name" value={signUpFormData.name} onChange={handleChange} required/>
                                 <label htmlFor="signUpEmail" className="">Email:</label>
                                 <input type="email" name="signUpEmail" id="signUpEmail" value={signUpFormData.signUpEmail} onChange={handleChange}/>
                                 <label htmlFor="signUpPassword" className="">Password:</label>

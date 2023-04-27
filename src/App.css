@@ -220,7 +220,7 @@ body {
 }
 
 .newtaskbutton:hover {
-  color: rgb(4, 4, 206);
+  background-color: rgb(62, 62, 240);
 }
 
 .check {

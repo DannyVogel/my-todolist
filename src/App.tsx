@@ -5,7 +5,8 @@ import AuthModal from './Components/AuthModal';
 import './App.css'
 import {database, ref, update, remove, onValue} from '../firebase'
 import { DataSnapshot } from 'firebase/database';
-import { auth, signOut, get } from '../firebase';
+import { auth, signOut, get, onAuthStateChanged } from '../firebase';
+import type { User } from '../firebase';
 
 interface ToDo {
   id: string,
@@ -23,6 +24,22 @@ function App(): JSX.Element {
   const toDoDB = ref(database, "toDoApp")
   const toDoListRef = ref(database, '/toDoApp/toDoLists/' + userUID)
   
+  useEffect(() => {
+    onAuthStateChanged(auth, (user: User | null)=> {
+      if (user) {
+        const uid: string = user.uid;
+        setUser(user.email!.slice(0, (user.email!).indexOf("@")))
+        setLoggedIn(true)
+        setUserUID(uid)
+      } else {
+        setLoggedIn(false)
+        setUser('')
+        setUserUID('')
+        // User is signed out
+      }
+    });
+  }, [])
+
   //when logged in, get from database once
   useEffect(() => {
     if(loggedIn){

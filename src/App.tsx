@@ -30,18 +30,15 @@ function App(): JSX.Element {
       get(toDoListRef).then((snapshot: DataSnapshot) => {
         snapshot.exists() ? setToDos(snapshot.val()) : []
         console.log("initial get")
-        setInitWrite(true)
       })
     }
   }, [loggedIn]);
 
-  //Read tasks from database and update in realtime
+  // Read tasks from database and update in realtime
   useEffect(() => {
     if(loggedIn){
       onValue(toDoListRef, (snapshot: DataSnapshot) => {
         snapshot.exists() ? setToDos(snapshot.val()) : []
-        console.log("realtime update")
-        setInitWrite(true)
       })
     }
   }, []);
@@ -81,9 +78,10 @@ function App(): JSX.Element {
   }
 
   useEffect(() => {
-    initWrite && writeNewToDo(toDos)
-    console.log("writeNewToDo useEffect")
-  }, [toDos, loggedIn])
+    if(!loggedIn) return
+    writeNewToDo(toDos)
+    console.log(toDos, "writeNewToDo useEffect")
+  }, [toDos])
 
   function updatNewText(event: React.ChangeEvent<HTMLInputElement>): void {
     setNewText(event.target.value)

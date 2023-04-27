@@ -57,17 +57,6 @@ function App(): JSX.Element {
     })
   }, [loggedIn]);
 
-  
-
-
-
-  // useEffect(() => {
-  //     onValue(toDoListRef, (snapshot: DataSnapshot) => {
-  //       console.log(snapshot.exists())
-  //       snapshot.exists() ? setToDos(snapshot.val()) : []
-  //     })
-  // }, []);
-
   const toDoElements = toDos.map((task: ToDo) => (
     <Task
       key={task.id}
@@ -144,7 +133,7 @@ function App(): JSX.Element {
 
   return (
     <div className="app">
-      {loggedIn ? <button className='logout-button' onClick={handleSignOut}>Logout</button> : null}
+      {loggedIn ? <button className='logout-button' onClick={handleSignOut}><i className="fa-solid fa-power-off"></i></button> : null}
       {loggedIn
         ? null
         : <AuthModal
@@ -155,7 +144,10 @@ function App(): JSX.Element {
           userUID={userUID}
           setUserUID={setUserUID}
         />}
-      <h1 className='title'>{userName && `${userName}'s`} ToDo List</h1>
+      <div className="titleContainer">
+        <h1 className='title'>{userName && `${userName}'s`}</h1>
+        <h1 className='title'>ToDo List</h1>
+      </div>
       {errorParagraph &&
         <p className='errorParagraph'>Please enter new ToDo</p>
       }

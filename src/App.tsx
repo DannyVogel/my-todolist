@@ -44,17 +44,29 @@ function App(): JSX.Element {
   useEffect(() => {
     if(loggedIn){
       get(toDoListRef).then((snapshot: DataSnapshot) => {
-        snapshot.exists() ? setToDos(snapshot.val()) : []
+        snapshot.exists() ? setToDos(snapshot.val()) : setToDos([])
       })
     }
-  }, []);
+  }, [loggedIn]);
 
-  // Read tasks from database and update in realtime
+  // Read todos from firebase realtime storage database and update in realtime
   useEffect(() => {
-      onValue(toDoListRef, (snapshot: DataSnapshot) => {
-        snapshot.exists() ? setToDos(snapshot.val()) : []
-      })
-  }, []);
+    if(!loggedIn) return
+    onValue(toDoListRef, (snapshot: DataSnapshot) => {
+      snapshot.exists() ? setToDos(snapshot.val()) : setToDos([])
+    })
+  }, [loggedIn]);
+
+  
+
+
+
+  // useEffect(() => {
+  //     onValue(toDoListRef, (snapshot: DataSnapshot) => {
+  //       console.log(snapshot.exists())
+  //       snapshot.exists() ? setToDos(snapshot.val()) : []
+  //     })
+  // }, []);
 
   const toDoElements = toDos.map((task: ToDo) => (
     <Task

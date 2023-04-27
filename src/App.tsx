@@ -47,15 +47,13 @@ function App(): JSX.Element {
         snapshot.exists() ? setToDos(snapshot.val()) : []
       })
     }
-  }, [loggedIn]);
+  }, []);
 
   // Read tasks from database and update in realtime
   useEffect(() => {
-    if(loggedIn){
       onValue(toDoListRef, (snapshot: DataSnapshot) => {
         snapshot.exists() ? setToDos(snapshot.val()) : []
       })
-    }
   }, []);
 
   const toDoElements = toDos.map((task: ToDo) => (
@@ -116,7 +114,6 @@ function App(): JSX.Element {
   }
 
   function handleReset(): void {
-    remove(toDoListRef);
     setToDos([])
   }
 

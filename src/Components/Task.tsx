@@ -1,9 +1,16 @@
-import React from 'react'
 
-export default function Task(props) {
+interface Props {
+  id: string;
+  text: string;
+  checked: boolean;
+  handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  deleteTask: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+}
+
+export default function Task(props: Props) {
   
-  const styles = {
-    textDecoration: props.checked ? "line-through" : null
+  const styles: React.CSSProperties = {
+    textDecoration: props.checked ? "line-through" : undefined
   }
   
   const deleteButton = (<i className='delete-button fa-solid fa-trash-can' onClick={props.deleteTask} id={props.id}></i>)
@@ -17,7 +24,7 @@ export default function Task(props) {
           checked={props.checked} 
           onChange={props.handleChange}
         />
-        <label for={props.id} className='task-text' style={styles}>{props.text}</label>
+        <label htmlFor={props.id} className='task-text' style={styles}>{props.text}</label>
         {props.checked ? deleteButton : null}
     </div>
   )

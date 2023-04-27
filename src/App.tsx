@@ -28,7 +28,7 @@ function App(): JSX.Element {
     onAuthStateChanged(auth, (user: User | null)=> {
       if (user) {
         const uid: string = user.uid;
-        setUser(user.email!.slice(0, (user.email!).indexOf("@")))
+        setUser(user.displayName!)
         setLoggedIn(true)
         setUserUID(uid)
       } else {

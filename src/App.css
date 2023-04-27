@@ -16,6 +16,7 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  align-items: center;
   min-width: 300px;
   max-width: 450px;
   min-height: 600px;
@@ -32,12 +33,17 @@ body {
   cursor: pointer;
   top: 5px;
   right: 10px;
-  width: 70px;
+  width: auto;
+  font-size: 18px;
   border-radius: 10px;
   background-color: whitesmoke;
   box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.75);
   -webkit-box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.75);
   -moz-box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.75);
+}
+
+.logout-button:hover {
+  color: #e01313;
 }
 
 .modal-overlay {
@@ -131,7 +137,6 @@ body {
   cursor: pointer;
 }
 
-
 .profileInfo {
   width: 70%;
   display: flex;
@@ -140,8 +145,16 @@ body {
   color: white;
 }
 
-.title {
+.titleContainer {
   margin-top: 30px;
+}
+
+.title {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin: 0;
   width: 100%;
   text-align: center;
 }
@@ -169,10 +182,13 @@ body {
 }
 
 .newtaskinput {
-  border-radius: 5px;
+  border-radius: 5px 0 0 5px;
   border: 1px solid gray;
+  border-right: none;
+  outline: none;
   padding: 5px;
   line-height: 20px;
+  min-width: 160px;
   width: 100%;
   font-size: 16px;
   -webkit-text-size-adjust: 100%;
@@ -187,13 +203,13 @@ body {
 }
 
 .newtaskbutton {
-  margin-left: 15px;
-  color: rgb(4, 4, 206);
-  background-color: transparent;
-  border: none;
+  color: white;
+  background-color: rgb(4, 4, 206);
+  border: 1px solid rgb(4, 4, 206);
+  border-left: none;
   cursor: pointer;
-  font-size: 25px;
-  
+  font-size: 22px;
+  border-radius: 0 5px 5px 0;
 }
 
 .newtaskbutton:hover {
@@ -209,6 +225,7 @@ body {
 }
 
 .taskList {
+  width: 100%;
   padding: 10px;
   margin-top: 10px;
   border-radius: 10px;
@@ -228,6 +245,8 @@ body {
 
 .task-text {
   margin-right: auto;
+  word-wrap: break-word;
+  width: 80%;
 }
 
 .delete-button {

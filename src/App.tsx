@@ -21,6 +21,7 @@ function App(): JSX.Element {
   const [loggedIn, setLoggedIn] = useState<boolean>(false)
   const [userName, setUser] = useState<string>("")
   const [userUID, setUserUID] = useState<string>("")
+  const [filter, setFilter] = useState<string>("all")
   const toDoDB = ref(database, "toDoApp")
   const toDoListRef = ref(database, '/toDoApp/toDoLists/' + userUID)
   
@@ -57,7 +58,9 @@ function App(): JSX.Element {
     })
   }, [loggedIn]);
 
-  const toDoElements = toDos.map((task: ToDo) => (
+  const toDoElements = toDos.map((task: ToDo) => {
+    //apply filters here
+    (
     <Task
       key={task.id}
       id={task.id}
@@ -66,7 +69,8 @@ function App(): JSX.Element {
       handleChange={handleChecked}
       deleteTask={deleteTask}
     />
-  ));
+  )
+});
 
   function createNewToDo(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -131,6 +135,30 @@ function App(): JSX.Element {
     });
 }
 
+  // function applyFilters(event: React.MouseEvent<HTMLElement>): void {
+  //   const filter = (event.target as HTMLElement).id
+  //   switch (filter) {
+  //     case "all":
+  //       setToDos(prevToDos => prevToDos.map(item => {
+  //         return {...item, checked: false}
+  //       }))
+  //       break;
+  //     case "active":
+  //       setToDos(prevToDos => prevToDos.map(item => {
+  //         return {...item, checked: false}
+  //       }))
+  //       break;
+  //     case "completed":
+  //       setToDos(prevToDos => prevToDos.map(item => {
+  //         return {...item, checked: true}
+  //       }))
+  //       break;
+  //     default:
+  //       break;
+  //   }
+  // }
+
+
   return (
     <div className="app">
       {loggedIn ? <button className='logout-button' onClick={handleSignOut}><i className="fa-solid fa-power-off"></i></button> : null}
@@ -156,6 +184,11 @@ function App(): JSX.Element {
           <input className='newtaskinput' type="text" name="newtask" value={newText} onChange={updatNewText} placeholder="Type new ToDo here" autoComplete='off' />
           <button className='newtaskbutton' type="submit"><i className='fa-solid fa-circle-plus'></i></button>
         </form>
+      </div>
+      <div className="filterContainer">
+        <button className='filterButton'>All</button>
+        <button className='filterButton'>Active</button>
+        <button className='filterButton'>Completed</button>
       </div>
       {toDos.length > 0
         ? toDoElements

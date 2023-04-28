@@ -44,6 +44,9 @@ body {
   box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.75);
   -webkit-box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.75);
   -moz-box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.75);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .logout-button:hover {
@@ -62,6 +65,9 @@ body {
   box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.75);
   -webkit-box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.75);
   -moz-box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.75);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .darkModeButton:hover {

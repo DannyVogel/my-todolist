@@ -28,7 +28,7 @@ function App(): JSX.Element {
     onAuthStateChanged(auth, (user: User | null)=> {
       if (user) {
         const uid: string = user.uid;
-        setUser(user.displayName!)
+        setUser(user.displayName ? user.displayName : 'Guest')
         setLoggedIn(true)
         setUserUID(uid)
       } else {
@@ -131,6 +131,15 @@ function App(): JSX.Element {
     });
 }
 
+  const checkedToDos = toDos.filter(item => item.checked)
+  const deleteCheckedButton = checkedToDos.length > 1 ? <button className='deleteCheckedButton' onClick={deleteChecked}>Delete checked</button> : null
+  function deleteChecked(){
+    setToDos(prevToDos => {
+      let newToDos = prevToDos.filter(item => !item.checked)
+      return newToDos
+    })
+  }
+
   return (
     <div className="app">
       {loggedIn ? <button className='logout-button' onClick={handleSignOut}><i className="fa-solid fa-power-off"></i></button> : null}
@@ -164,8 +173,8 @@ function App(): JSX.Element {
           <span className='task-text'>Your ToDos will appear here</span>
         </div>)
       }
+      {deleteCheckedButton}
       <br />
-      <i className="reset-button fa-solid fa-recycle" onClick={handleReset}>: Clear list</i>
     </div>
   )
 }

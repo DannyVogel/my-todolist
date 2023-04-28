@@ -140,8 +140,19 @@ function App(): JSX.Element {
     })
   }
 
+// toggle dark mode
+  const [darkMode, setDarkMode] = useState<boolean>(false)
+  const [darkModeIcon, setDarkModeIcon] = useState<string>('fa-solid fa-moon blue')
+  function toggleDarkMode(){
+    setDarkMode(prevDarkMode => !prevDarkMode)
+    darkMode ? setDarkModeIcon('fa-solid fa-moon blue') : setDarkModeIcon('fa-solid fa-sun orange')
+  }
+
+
+
   return (
-    <div className="app">
+    <div className={`app ${darkMode ? 'dark' : ''}`}>
+      <button className='darkModeButton' onClick={toggleDarkMode}><i className={darkModeIcon}></i></button>
       {loggedIn ? <button className='logout-button' onClick={handleSignOut}><i className="fa-solid fa-power-off"></i></button> : null}
       {loggedIn
         ? null

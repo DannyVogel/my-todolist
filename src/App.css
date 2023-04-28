@@ -7,7 +7,7 @@
 
 body {
   margin: 0;
-  background-color: #708090;
+  background-color: #6b88a5;
 }
 
 .app {
@@ -28,12 +28,16 @@ body {
   background-color: white; 
 }
 
+.dark {
+  background-color: #708090;
+}
+
 .logout-button {
   position: absolute;
   cursor: pointer;
   top: 5px;
   right: 10px;
-  width: auto;
+  width: 35px;
   font-size: 18px;
   border-radius: 10px;
   background-color: whitesmoke;
@@ -44,6 +48,32 @@ body {
 
 .logout-button:hover {
   color: #e01313;
+}
+
+.darkModeButton {
+  position: absolute;
+  cursor: pointer;
+  top: 5px;
+  left: 10px;
+  width: 35px;
+  font-size: 18px;
+  border-radius: 10px;
+  background-color: whitesmoke;
+  box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.75);
+  -webkit-box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.75);
+  -moz-box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.75);
+}
+
+.darkModeButton:hover {
+  background-color: rgb(224, 222, 222);
+}
+
+.orange {
+  color: #FFA500;
+}
+
+.blue {
+  color: #19A7CE;
 }
 
 .modal-overlay {

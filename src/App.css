@@ -223,6 +223,21 @@ body {
   background-color: rgb(62, 62, 240);
 }
 
+.deleteCheckedButton {
+  cursor: pointer;
+  width: auto;
+  margin-top: 20px;
+  border-radius: 10px;
+  background-color: whitesmoke;
+  box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.75);
+  -webkit-box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.75);
+  -moz-box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.75);
+}
+
+.deleteCheckedButton:hover {
+  color: #e01313;
+}
+
 .check {
   width: 15px;
   height: 15px;
@@ -264,19 +279,6 @@ body {
 }
 
 .delete-button:hover {
-  color: red;
-}
-
-.reset-button {
-  position: absolute;
-  top: 0;
-  left: 0;
-  margin: 10px;
-  cursor: pointer;
-  font-size: 14px;
-}
-
-.reset-button:hover {
   color: red;
 }
 

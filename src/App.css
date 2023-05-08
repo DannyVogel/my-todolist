@@ -325,6 +325,11 @@ body {
     height: 100vh;
     margin: 0 auto;
     border-radius: 0;
+    background-image: linear-gradient(120deg, #f6d365 0%, #fda085 100%);
+  }
+
+  .dark {
+    background-image: linear-gradient(to top, #330867 0%, #30cfd0 100%);
   }
 
   .errorParagraph {

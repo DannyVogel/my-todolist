@@ -29,6 +29,7 @@ body {
   background-image: linear-gradient(to top, #330867 0%, #30cfd0 100%);
 }
 
+
 .logout-button {
   position: absolute;
   cursor: pointer;

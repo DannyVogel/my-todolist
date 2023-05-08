@@ -1,8 +1,8 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto&family=Tilt+Warp&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;700&family=Roboto+Slab:wght@900&family=Tilt+Warp&display=swap');
 
 * {
   box-sizing: border-box;
-  font-family: 'Tilt Warp', cursive;
+  font-family: 'Tilt Warp', 'Roboto Slab', serif
 }
 
 body {

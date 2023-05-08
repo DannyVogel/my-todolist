@@ -141,7 +141,7 @@ function App(): JSX.Element {
   }
 
 // toggle dark mode
-  const [darkMode, setDarkMode] = useState<boolean>(false)
+  const [darkMode, setDarkMode] = useState<boolean>(true)
   const [darkModeIcon, setDarkModeIcon] = useState<string>('fa-solid fa-moon blue')
   function toggleDarkMode(){
     setDarkMode(prevDarkMode => !prevDarkMode)

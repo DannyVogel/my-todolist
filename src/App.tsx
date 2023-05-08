@@ -23,7 +23,7 @@ function App(): JSX.Element {
   const [userUID, setUserUID] = useState<string>("")
   const toDoDB = ref(database, "toDoApp")
   const toDoListRef = ref(database, '/toDoApp/toDoLists/' + userUID)
-  
+
   useEffect(() => {
     onAuthStateChanged(auth, (user: User | null)=> {
       if (user) {
@@ -151,7 +151,8 @@ function App(): JSX.Element {
 
 
   return (
-    <div className={`app ${darkMode ? 'dark' : ''}`} id="123">
+    <div className={`app ${darkMode ? 'dark' : ''}`}>
+      <meta name="theme-color" content={`${darkMode ? '#30cfd0' : '#f6d365'}`}/>
       <button className='darkModeButton' onClick={toggleDarkMode}><i className={darkModeIcon}></i></button>
       {loggedIn ? <button className='logout-button' onClick={handleSignOut}><i className="fa-solid fa-power-off"></i></button> : null}
       {loggedIn

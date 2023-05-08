@@ -6,8 +6,8 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/notebook.png">
     <link rel="manifest" href="/site.webmanifest">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#f6d365" media="(prefers-color-scheme: light)">
-    <meta name="theme-color" content="#30cfd0" media="(prefers-color-scheme: dark)">
+    <meta name="theme-color" content="#f6d365">
+    <!-- <meta name="theme-color" content="#30cfd0" media="(prefers-color-scheme: dark)"> -->
     <script src="https://kit.fontawesome.com/6c00143dfb.js" crossorigin="anonymous"></script>
     <title>ToDo List</title>
   </head>
@@ -15,4 +15,18 @@
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
+
+  <script>
+    // Get a reference to the meta tag
+    const metaTag = document.querySelector('meta[name="theme-color"]');
+
+    // Get a reference to the div element
+    const divElement = document.getElementById('123');
+
+    // Check if the "dark" class is present on the div element
+    if (divElement.classList.contains('dark')) {
+      // If the "dark" class is present, update the theme color to "#30cfd0"
+      metaTag.setAttribute('content', '#30cfd0');
+    }
+  </script>
 </html>

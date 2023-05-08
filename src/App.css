@@ -12,15 +12,12 @@ body {
 
 .app {
   position: relative;
-  border-radius: 20px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
   min-width: 300px;
-  max-width: 450px;
-  min-height: 600px;
-  margin: 10px auto;
+  min-height: 100vh;
   padding: 0 30px;
   box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.75);
   -webkit-box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.75);
@@ -31,7 +28,6 @@ body {
 .dark {
   background-image: linear-gradient(to top, #330867 0%, #30cfd0 100%);
 }
-
 
 .logout-button {
   position: absolute;
@@ -287,6 +283,7 @@ body {
 
 .taskList {
   width: 100%;
+  max-width: 600px;
   padding: 10px;
   margin-top: 10px;
   border-radius: 10px;

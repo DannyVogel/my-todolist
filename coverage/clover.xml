@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1683207447364" clover="3.2.0">
-  <project timestamp="1683207447364" name="All files">
-    <metrics statements="132" coveredstatements="46" conditionals="46" coveredconditionals="19" methods="50" coveredmethods="9" elements="228" coveredelements="74" complexity="0" loc="132" ncloc="132" packages="2" files="4" classes="4"/>
+<coverage generated="1683538220786" clover="3.2.0">
+  <project timestamp="1683538220786" name="All files">
+    <metrics statements="132" coveredstatements="46" conditionals="48" coveredconditionals="20" methods="50" coveredmethods="9" elements="230" coveredelements="75" complexity="0" loc="132" ncloc="132" packages="2" files="4" classes="4"/>
     <package name="src">
-      <metrics statements="81" coveredstatements="34" conditionals="32" coveredconditionals="10" methods="31" coveredmethods="7"/>
+      <metrics statements="81" coveredstatements="34" conditionals="34" coveredconditionals="11" methods="31" coveredmethods="7"/>
       <file name="App.tsx" path="F:\Danny\Coding Bootcamp\my-todolist\src\App.tsx">
-        <metrics statements="78" coveredstatements="34" conditionals="32" coveredconditionals="10" methods="31" coveredmethods="7"/>
+        <metrics statements="78" coveredstatements="34" conditionals="34" coveredconditionals="11" methods="31" coveredmethods="7"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
         <line num="3" count="1" type="stmt"/>
@@ -83,7 +83,7 @@
         <line num="147" count="0" type="stmt"/>
         <line num="148" count="0" type="cond" truecount="0" falsecount="2"/>
         <line num="153" count="3" type="stmt"/>
-        <line num="193" count="1" type="stmt"/>
+        <line num="194" count="1" type="stmt"/>
       </file>
       <file name="main.tsx" path="F:\Danny\Coding Bootcamp\my-todolist\src\main.tsx">
         <metrics statements="3" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>

@@ -325,7 +325,7 @@ body {
     height: 100vh;
     margin: 0 auto;
     border-radius: 0;
-    background-image: linear-gradient(120deg, #f6d365 0%, #fda085 100%);
+    background-image: linear-gradient(to top, #fda085 0%, #f6d365 100%);
   }
 
   .dark {

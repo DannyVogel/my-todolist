@@ -114,10 +114,6 @@ function App(): JSX.Element {
     })
   }
 
-  function handleReset(): void {
-    setToDos([])
-  }
-
   function handleSignOut(){
     signOut(auth).then(() => {
         setLoggedIn(false)

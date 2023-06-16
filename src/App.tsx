@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import uuid from 'react-uuid';
 import Task from './Components/Task'
 import AuthModal from './Components/AuthModal';
+import Loader from './Components/Loader';
 import './App.css'
 import {database, ref, update, remove, onValue} from '../firebase'
 import { DataSnapshot } from 'firebase/database';
@@ -23,6 +24,9 @@ function App(): JSX.Element {
   const [userUID, setUserUID] = useState<string>("")
   const toDoDB = ref(database, "toDoApp")
   const toDoListRef = ref(database, '/toDoApp/toDoLists/' + userUID)
+  const [loading, setLoading] = useState<boolean>(true)
+  const [isUnmounting, setIsUnmounting] = useState<boolean>(false)
+  const [isMounting, setIsMounting] = useState<boolean>(false)
 
   useEffect(() => {
     onAuthStateChanged(auth, (user: User | null)=> {
@@ -31,10 +35,20 @@ function App(): JSX.Element {
         setUser(user.displayName ? user.displayName : 'Guest')
         setLoggedIn(true)
         setUserUID(uid)
+        setIsUnmounting(true)
+        setTimeout(() => {
+           setLoading(false)
+           setIsMounting(true)
+        }, 1000)
       } else {
         setLoggedIn(false)
         setUser('')
         setUserUID('')
+        setIsUnmounting(true)
+        setTimeout(() => {
+          setLoading(false)
+          setIsMounting(true)
+        }, 1000)
         // User is signed out
       }
     });
@@ -114,10 +128,6 @@ function App(): JSX.Element {
     })
   }
 
-  function handleReset(): void {
-    setToDos([])
-  }
-
   function handleSignOut(){
     signOut(auth).then(() => {
         setLoggedIn(false)
@@ -148,45 +158,49 @@ function App(): JSX.Element {
     darkMode ? setDarkModeIcon('fa-solid fa-moon blue') : setDarkModeIcon('fa-solid fa-sun orange')
   }
 
-
-
   return (
-    <div className={`app ${darkMode ? 'dark' : ''}`}>
-      <meta name="theme-color" content={`${darkMode ? '#30cfd0' : '#f6d365'}`}/>
-      <button className='darkModeButton' onClick={toggleDarkMode}><i className={darkModeIcon}></i></button>
-      {loggedIn ? <button className='logout-button' onClick={handleSignOut}><i className="fa-solid fa-power-off"></i></button> : null}
-      {loggedIn
-        ? null
-        : <AuthModal
-          loggedIn={loggedIn}
-          user={userName}
-          setLoggedIn={setLoggedIn}
-          setUser={setUser}
-          userUID={userUID}
-          setUserUID={setUserUID}
-        />}
-      <div className="titleContainer">
-        <h1 className='title'>{userName && `${userName}'s`}</h1>
-        <h1 className='title'>ToDo List</h1>
+    <div className={`wrapper ${darkMode ? 'dark' : ''}`}>
+      {loading ? <Loader 
+      isUnmounting={isUnmounting}
+      darkMode={darkMode}/> : null}
+      <div className={`app relative ${isMounting && 'fade-in'}`}>
+        <meta name="theme-color" content={`${darkMode ? '#30cfd0' : '#f6d365'}`}/>
+        <button className='darkModeButton' onClick={toggleDarkMode}><i className={darkModeIcon}></i></button>
+
+        {loggedIn ? <button className='logout-button' onClick={handleSignOut}><i className="fa-solid fa-power-off"></i></button> : null}
+        {loggedIn
+          ? null
+          : <AuthModal
+            loggedIn={loggedIn}
+            user={userName}
+            setLoggedIn={setLoggedIn}
+            setUser={setUser}
+            userUID={userUID}
+            setUserUID={setUserUID}
+          />}
+        <div className="titleContainer">
+          <h1 className='title'>{userName && `${userName}'s`}</h1>
+          <h1 className='title'>ToDo List</h1>
+        </div>
+        {errorParagraph &&
+          <p className='errorParagraph'>Please enter new ToDo</p>
+        }
+        <div className='newtask'>
+          <form className='newTaskForm' onSubmit={createNewToDo}>
+            <input className='newtaskinput' type="text" name="newtask" value={newText} onChange={updatNewText} placeholder="Type new ToDo here" autoComplete='off' />
+            <button className='newtaskbutton' type="submit"><i className='fa-solid fa-circle-plus'></i></button>
+          </form>
+        </div>
+        {toDos.length > 0
+          ? toDoElements
+          : (<div className='taskList'>
+            <input className='check' type="checkbox"></input>
+            <span className='task-text'>Your ToDos will appear here</span>
+          </div>)
+        }
+        {deleteCheckedButton}
+        <br />
       </div>
-      {errorParagraph &&
-        <p className='errorParagraph'>Please enter new ToDo</p>
-      }
-      <div className='newtask'>
-        <form className='newTaskForm' onSubmit={createNewToDo}>
-          <input className='newtaskinput' type="text" name="newtask" value={newText} onChange={updatNewText} placeholder="Type new ToDo here" autoComplete='off' />
-          <button className='newtaskbutton' type="submit"><i className='fa-solid fa-circle-plus'></i></button>
-        </form>
-      </div>
-      {toDos.length > 0
-        ? toDoElements
-        : (<div className='taskList'>
-          <input className='check' type="checkbox"></input>
-          <span className='task-text'>Your ToDos will appear here</span>
-        </div>)
-      }
-      {deleteCheckedButton}
-      <br />
     </div>
   )
 }
